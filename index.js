@@ -10,6 +10,24 @@ server.get("/", (req, res) => {
   });
 });
 
+server.get("/food", async (req, res, next) => {
+  try {
+    const food = await foodModel.list();
+    res.status(200).json(food);
+  } catch (err) {
+    next(err);
+  }
+});
+
+server.post("/food", async (req, res, next) => {
+  try {
+    const food = await foodModel.insert(req.body);
+    res.status(201).json(hobbit);
+  } catch (err) {
+    next(err);
+  }
+});
+
 server.use((err, req, res, next) => {
   console.log("Error:", err);
   res.status(500).json({
